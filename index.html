@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DAVID 30 — Archive Collection</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Syne:wght@700;800&display=swap');
+
+    /* ARQUITECTURA GRÁFICA BRUTALISTA MINIMALISTA MAXIMIZADA */
+    :root {
+      --bg: #000000;             
+      --card-bg: #0b0b0b;        
+      --border: #141414;
+      --text: #ffffff;           
+      --text-muted: #444444;     
+      --radius-editorial: 40px;  
+      --accent-gold: #ca9b52;
+      
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Inter', sans-serif;
+      --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 100%;
+      background-color: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    @media (min-width: 992px) {
+      body { padding: 40px 20px; }
+      .app-container {
+        max-width: 1340px; 
+        min-height: calc(100vh - 80px);
+      }
+    }
+
+    /* PANTALLAS */
+    .screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+    }
+    .screen.active { display: flex; }
+
+    /* EFECTO HOVER TEXTO GIGANTE */
+    .hover-scale-text {
+      display: inline-block;
+      transition: var(--transition);
+      transform-origin: left center;
+      cursor: default;
+    }
+    .hover-scale-text:hover {
+      transform: scale(1.05);
+      color: #ffffff;
+    }
+
+    /* ===== LOGIN PANTALLA GIGANTE ===== */
+    #s-login {
+      padding: 30px 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-grid {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 992px) {
+      .login-grid {
+        max-width: 1240px;
+        display: grid;
+        grid-template-columns: 1.6fr 1fr; 
+        gap: 80px;
+        align-items: center;
+      }
+    }
+
+    .brand-hero-frame {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-editorial);
+      overflow: hidden;
+      position: relative;
+      background-color: #0d0d0d;
+      border: 1px solid var(--border);
+    }
+    @media (min-width: 992px) {
+      .brand-hero-frame { aspect-ratio: 4 / 5; width: 100%; }
+    }
+
+    .brand-hero-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(108%);
+      transition: var(--transition);
+    }
+    .brand-hero-frame:hover img { filter: grayscale(0%) contrast(100%); transform: scale(1.02); }
+
+    .login-meta-side {
+      display: flex;
+      flex-direction: column;
+      margin-top: 32px;
+    }
+    @media (min-width: 992px) { .login-meta-side { margin-top: 0; } }
+
+    .huge-header {
+      font-family: var(--font-display);
+      font-size: 4.2rem;
+      font-weight: 800;
+      line-height: 0.8;
+      letter-spacing: -3px;
+      text-transform: lowercase;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 992px) { .huge-header { font-size: 7.5rem; letter-spacing: -5px; } }
+
+    .language-ticker-space {
+      font-family: var(--font-display);
+      font-size: 2.4rem; 
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: lowercase;
+      letter-spacing: -1px;
+      margin-bottom: 36px;
+      transition: opacity 0.4s ease;
+      line-height: 1;
+    }
+    @media (min-width: 992px) { .language-ticker-space { font-size: 4.2rem; } }
+
+    .cd-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 36px;
+      border-left: 2px solid #fff;
+      padding-left: 20px;
+    }
+    .cd-box { display: flex; align-items: baseline; gap: 4px; }
+    .cd-n { font-family: var(--font-sans); font-size: 1.8rem; font-weight: 700; }
+    .cd-l { font-size: 0.65rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+    .access-title { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-bottom: 16px; }
+    
+    .g-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .g-btn {
+      width: 100%;
+      padding: 22px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    .g-btn:hover { background: #ffffff; color: #000000; border-color: #ffffff; transform: scale(1.01); }
+
+    /* MODALES */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .overlay.active { display: flex; }
+    .modal { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-editorial); padding: 44px 28px; width: 100%; max-width: 420px; }
+    .modal h3 { font-family: var(--font-display); font-size: 2.2rem; text-transform: lowercase; margin-bottom: 8px; text-align: center; font-weight: 700; }
+    .modal p { color: #666; font-size: 0.75rem; text-transform: uppercase; text-align: center; margin-bottom: 28px; letter-spacing: 1.5px; }
+    
+    .pw-input { width: 100%; padding: 18px; border: 1px solid var(--border); border-radius: 50px; background: #000; color: #fff; text-align: center; font-size: 1rem; letter-spacing: 4px; outline: none; }
+    .err { color: #ff4d6d; font-size: 0.72rem; text-transform: uppercase; text-align: center; margin-top: 12px; display: none; font-weight: 600; }
+    .m-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .btn-enter { padding: 18px; border: none; background: #fff; color: #000; border-radius: 50px; font-family: var(--font-sans); text-transform: uppercase; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+    .btn-cancel { padding: 12px; background: transparent; border: none; color: #666; font-size: 0.70rem; text-transform: uppercase; cursor: pointer; }
+
+    /* ===== INTERIOR APP CABECERA ===== */
+    .top-header-bar {
+      padding: 36px 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: none !important; 
+    }
+    .app-brand-title { 
+      font-family: var(--font-display); 
+      font-size: 3.5rem; 
+      font-weight: 800; 
+      letter-spacing: -2px; 
+      text-transform: lowercase; 
+    }
+    .app-brand-sub { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-left: 14px; font-weight: 500; }
+    .btn-logout-gate { background: transparent; border: none; color: #666; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; }
+    .btn-logout-gate:hover { color: #fff; }
+
+    .content-canvas { padding: 32px 20px 80px; width: 100%; flex: 1; }
+
+    /* REJILLA DE WIDGETS */
+    .widgets-dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 768px) {
+      .widgets-dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .editorial-widget {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-editorial);
+      padding: 36px;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .editorial-widget:hover { border-color: #333; transform: translateY(-2px); }
+    .editorial-widget:hover .widget-meta-link { color: #ffffff !important; }
+
+    .widget-title {
+      font-family: var(--font-display);
+      font-size: 3.4rem;
+      font-weight: 700;
+      line-height: 0.85;
+      letter-spacing: -2.5px;
+      text-transform: lowercase;
+      margin: 12px 0;
+    }
+
+    .widget-meta { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666; }
+    .widget-meta-link { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666 !important; text-decoration: none !important; display: block; transition: var(--transition); }
+
+    .widget-preview-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; width: 100%; }
+    .widget-preview-thumb { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; border: 1px solid #1a1a1a; }
+    
+    .widget-preview-text-stack { display: flex; flex-direction: column; gap: 8px; max-height: 110px; overflow: hidden; margin-top: 10px; }
+    .widget-mini-msg { font-size: 0.8rem; color: #888; line-height: 1.3; border-left: 2px solid #333; padding-left: 8px; }
+    .widget-mini-msg strong { color: #fff; font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+    .spotify-dashboard-player-wrap {
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: transparent;
+      border: none !important;
+      outline: none !important;
+    }
+    .spotify-dashboard-player-wrap iframe {
+      border: none !important;
+      outline: none !important;
+      display: block;
+      background: transparent;
+      box-shadow: none !important;
+    }
+
+    /* SECCIONES DETALLE INTERNAS */
+    .detailed-section {
+      display: none;
+      animation: sectionFade 0.6s var(--transition);
+    }
+    .detailed-section.active { display: block; }
+    @keyframes sectionFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .back-interface-btn {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      border: none;
+      color: #666;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      margin-bottom: 36px;
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .back-interface-btn:hover { color: #fff; transform: translateX(-6px); }
+
+    .split-grid { display: flex; flex-direction: column; gap: 28px; }
+    @media (min-width: 768px) { .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; } }
+
+    .form-block { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-editorial); padding: 36px; margin-bottom: 32px; }
+    
+    .inp, .txta {
+      width: 100%; padding: 18px 24px; border: 1px solid var(--border); border-radius: 50px; background: #000;
+      color: #fff; font-family: var(--font-sans); font-size: 0.9rem; outline: none; transition: var(--transition); margin-bottom: 16px;
+    }
+    .txta { border-radius: 24px; resize: none; height: 110px; }
+    .inp:focus, .txta:focus { border-color: #333; }
+
+    /* ESTILADO PERSONALIZADO DE BOTONES DE RADIO BRUTALISTAS */
+    .form-block input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #262626;
+      border-radius: 50%;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 14px;
+      position: relative;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .form-block input[type="radio"]:checked {
+      border-color: #ffffff;
+      background-color: #ffffff;
+    }
+    .form-block input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #000000;
+    }
+
+    .btn-submit {
+      width: 100%; padding: 18px; background: #ffffff; color: #000000; border: none; border-radius: 50px;
+      font-family: var(--font-sans); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; cursor: pointer; transition: var(--transition);
+    }
+    .btn-submit:hover { background: #dddddd; }
+    .btn-submit:disabled { background: #111; color: #444; cursor: not-allowed; }
+
+    .upload-trigger { border: 1px dashed #222; background: #030303; border-radius: 24px; padding: 36px; text-align: center; cursor: pointer; margin-bottom: 24px; }
+    .upload-trigger span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 600; }
+
+    .wall-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .wall-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: #666; font-weight: 700; }
+
+    .photo-wall-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    @media (min-width: 768px) { .photo-wall-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    
+    .photo-item-frame { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 24px; border: 1px solid var(--border); cursor: pointer; position: relative; }
+    .photo-item-frame img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); filter: grayscale(100%); }
+    .photo-item-frame:hover img { transform: scale(1.03); filter: grayscale(0%); }
+    .photo-item-author { position: absolute; bottom: 14px; left: 14px; font-size: 0.65rem; text-transform: uppercase; background: rgba(0,0,0,0.85); padding: 4px 12px; border-radius: 12px; font-weight: 500; }
+
+    .msg-wall-stack { display: flex; flex-direction: column; gap: 16px; }
+    .msg-editorial-card { border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .msg-card-meta { display: flex; justify-content: space-between; font-size: 0.72rem; text-transform: uppercase; color: #666; margin-bottom: 8px; font-weight: 600; }
+    .msg-card-body { font-size: 1.1rem; line-height: 1.54; color: #e0e0e0; }
+
+    .bizum-editorial-box { text-align: center; padding: 44px 24px; border: 1px solid var(--border); border-radius: var(--radius-editorial); margin-bottom: 32px; background: #050505; transition: var(--transition); }
+    .bizum-number { font-family: var(--font-display); font-size: 1.8rem; margin: 16px 0; color: #fff; font-weight: 700; }
+    .btn-biz-link { background: transparent; border: 1px solid #fff; color: #fff; padding: 14px 32px; border-radius: 50px; font-size: 0.72rem; text-transform: uppercase; cursor: pointer; font-weight: 700; transition: var(--transition); }
+    .btn-biz-link:hover { background: #fff; color: #000; }
+    .gift-row-item { display: flex; justify-content: space-between; padding: 16px 4px; border-bottom: 1px solid var(--border); font-size: 0.9rem; text-transform: uppercase; }
+
+    .spotify-widget-embed { border: none !important; border-radius: var(--radius-editorial); background: transparent; margin-bottom: 24px; padding: 0; outline: none !important; }
+    .spotify-widget-embed iframe { border: none !important; outline: none !important; display: block; background: transparent; box-shadow: none !important; }
+
+    .btn-spotify-link, .btn-spotify-link:visited, .btn-spotify-link:active { 
+      display: inline-block; 
+      color: #666 !important; 
+      font-size: 0.72rem; 
+      text-transform: uppercase; 
+      text-decoration: none !important; 
+      letter-spacing: 2px;
+      font-weight: 600; 
+      transition: var(--transition); 
+      margin-top: 20px;
+    }
+    .btn-spotify-link:hover { 
+      color: #ffffff !important; 
+      transform: scale(1.05);
+    }
+
+    .stickers-gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (min-width: 768px) { .stickers-gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    .sticker-download-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 240px; }
+    .sticker-visual-box { width: 100px; height: 100px; background: #111; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 14px; border: 1px solid #222; }
+    .btn-download-sticker { background: transparent; border: 1px solid #666; color: #fff; padding: 10px 20px; border-radius: 50px; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; cursor: pointer; transition: var(--transition); width: 100%; }
+    .btn-download-sticker:hover { border-color: #fff; background: #fff; color: #000; }
+
+    .file-preview-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .file-preview-thumb { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; }
+    .progress-track { height: 2px; background: var(--border); width: 100%; margin-bottom: 14px; }
+    .progress-track .progress-fill-bar { height: 100%; background: #fff; width: 0%; transition: width 0.3s ease; }
+    .status-toast { font-size: 0.72rem; text-transform: uppercase; text-align: center; padding: 14px; border: 1px solid #fff; border-radius: 50px; margin-top: 14px; display: none; font-weight: 600; }
+    .empty-state { text-align: center; padding: 64px 20px; color: #666; font-size: 0.9rem; font-style: italic; }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 300; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lb-img { max-width: 92vw; max-height: 82vh; object-fit: contain; border-radius: 16px; }
+    .lb-close { position: absolute; top: 24px; right: 24px; background: transparent; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+    .lb-info { position: absolute; bottom: 40px; font-size: 0.75rem; text-transform: uppercase; color: #bbb; }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- LIGHTBOX DETALLE -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <button class="lb-close" onclick="closeLightbox()">✕</button>
+      <img class="lb-img" id="lb-img" src="" alt="">
+      <div class="lb-info" id="lb-info"></div>
+    </div>
+
+    <!-- PUERTA DE ACCESO MODAL -->
+    <div class="overlay" id="modal">
+      <div class="modal">
+        <h3 id="modal-title">acceso.</h3>
+        <p>Código de invitación privado</p>
+        <div class="pw-wrap">
+          <input class="pw-input" type="password" id="pw" placeholder="••••••••" />
+        </div>
+        <div class="err" id="pw-err">Código inválido</div>
+        <div class="m-btns">
+          <button class="btn-enter" onclick="checkPw()">Confirmar</button>
+          <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTADA EDITORIAL (LOGIN) -->
+    <div class="screen active" id="s-login">
+      <div class="login-grid">
+        <div class="brand-hero-frame">
+          <img src="E3E46EE5-AF2F-41D1-B306-8422612515DB en tamaño mediano.jpeg" alt="David Cañadell">
+        </div>
+        <div class="login-meta-side">
+          <h1 class="huge-header">
+            <span class="hover-scale-text">david.</span><br>
+            <span class="hover-scale-text">cañadell.</span>
+          </h1>
+          
+          <div class="language-ticker-space" id="language-changer">30è aniversari</div>
+          
+          <div class="cd-wrap">
+            <div class="cd-box"><span class="cd-n" id="cd-d">--</span><span class="cd-l">días</span></div>
+            <div class="cd-box"><span class="cd-n" id="cd-h">--</span><span class="cd-l">horas</span></div>
+            <div class="cd-box"><span class="cd-n" id="cd-m">--</span><span class="cd-l">min</span></div>
+            <div class="cd-box"><span class="cd-n" id="cd-s">--</span><span class="cd-l">seg</span></div>
+          </div>
+          
+          <p class="access-title">Línea de acceso privada</p>
+          <div class="g-btns">
+            <button class="g-btn" onclick="openModal('familia')"><span>Colección Familia</span><span>→</span></button>
+            <button class="g-btn" onclick="openModal('amigos')"><span>Colección Amigos</span><span>→</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTORNO PRIVADO POR WIDGETS -->
+    <div class="screen" id="s-app">
+      <div class="top-header-bar">
+        <div>
+          <span class="app-brand-title hover-scale-text">david30.</span>
+          <span class="app-brand-sub" id="bar-badge"></span>
+        </div>
+        <button class="btn-logout-gate" onclick="logout()">Salir</button>
+      </div>
+
+      <div class="content-canvas">
+
+        <!-- ===== PANEL DE CONTROL PRINCIPAL DE WIDGETS ===== -->
+        <div class="detailed-section active" id="sec-inicio">
+          <div class="widgets-dashboard-grid">
+            
+            <!-- WIDGET GALERÍA -->
+            <div class="editorial-widget" onclick="navigateToSection('fotos')">
+              <span class="widget-meta">01 // Galería Compartida</span>
+              <h2 class="widget-title"><span class="hover-scale-text">galería.</span></h2>
+              <div class="widget-preview-photos" id="widget-preview-photos-area"></div>
+              <span class="widget-meta-link" id="widget-photo-counter">0 imágenes — ver galería →</span>
+            </div>
+
+            <!-- WIDGET LIBRO DE FIRMAS -->
+            <div class="editorial-widget" onclick="navigateToSection('mensajes')">
+              <span class="widget-meta">02 // Correspondencia</span>
+              <h2 class="widget-title"><span class="hover-scale-text">firmas.</span></h2>
+              <div class="widget-preview-text-stack" id="widget-preview-messages-area"></div>
+              <span class="widget-meta-link">acceder al libro de firmas →</span>
+            </div>
+
+            <!-- WIDGET PROYECTO REGALO -->
+            <div class="editorial-widget" onclick="navigateToSection('regalo')">
+              <span class="widget-meta">03 // Fondo Colectivo</span>
+              <h2 class="widget-title"><span class="hover-scale-text">regalo.</span></h2>
+              <div class="stats-editorial-row" style="margin-bottom:0; margin-top:8px;">
+                <div class="stat-editorial-box" style="border-color:#222;"><span class="stat-editorial-val" id="widget-total-eur">0</span><span class="stat-editorial-lbl">Estado actual</span></div>
+              </div>
+              <span class="widget-meta-link">detalles de aportación →</span>
+            </div>
+
+            <!-- WIDGET SPOTIFY -->
+            <div class="editorial-widget" style="cursor: default;">
+              <span class="widget-meta">04 // Banda Sonora Interactiva</span>
+              <div class="spotify-dashboard-player-wrap">
+                <iframe src="https://open.spotify.com/embed/playlist/1KWaMoSrB3c5h4ET6pd48b?utm_source=generator&theme=0" width="100%" height="160" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+              </div>
+              <span class="widget-meta-link" style="cursor: pointer; margin-top: 10px;" onclick="navigateToSection('spotify')">ver instrucciones de adición →</span>
+            </div>
+
+            <!-- WIDGET: STICKERS DE DAVID -->
+            <div class="editorial-widget" onclick="navigateToSection('stickers')" style="grid-column: 1 / -1; min-height: auto; padding: 28px 36px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 14px;">
+                <div>
+                  <span class="widget-meta">05 // Recursos Exclusivos</span>
+                  <h2 class="widget-title" style="margin: 4px 0 0;"><span class="hover-scale-text">stickers de david.</span></h2>
+                </div>
+                <span class="widget-meta-link">descargar packs virtuales →</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ===== ENTORNO DETALLE: GALERÍA ===== -->
+        <div class="detailed-section" id="sec-fotos">
+          <button class="back-interface-btn" onclick="backToDashboard()">← Volver al panel</button>
+          <div class="form-block">
+            <div class="upload-trigger" onclick="document.getElementById('file-in').click()">
+              <span>Seleccionar imágenes del dispositivo</span>
+            </div>
+            <input type="file" id="file-in" accept="image/*" multiple style="display:none" onchange="previewFiles(event)">
+            <div class="file-preview-wrap" id="file-preview"></div>
+            <input class="inp" id="ph-author" placeholder="Tu nombre / Firma">
+            <div class="progress-container" id="progress-wrap" style="display:none;">
+              <div class="progress-track"><div class="progress-fill-bar" id="progress-fill"></div></div>
+              <p id="progress-label" style="font-size:0.6rem; color: #666; text-align:right; text-transform:uppercase;"></p>
+            </div>
+            <button class="btn-submit" id="btn-upload" onclick="uploadPhotos()">Sincronizar capturas</button>
+            <div class="status-toast" id="ph-ok">Carrete integrado con éxito</div>
+          </div>
+          <div class="wall-hdr"><span class="wall-title">Catálogo Completo</span></div>
+          <div class="photo-wall-grid" id="photo-wall"></div>
+        </div>
+
+        <!-- ===== ENTORNO DETALLE: LIBRO DE FIRMAS ===== -->
+        <div class="detailed-section" id="sec-mensajes">
+          <button class="back-interface-btn" onclick="backToDashboard()">← Volver al panel</button>
+          <div class="split-grid">
+            <div class="form-block">
+              <input class="inp" id="msg-author" placeholder="Tu nombre / Firma">
+              <textarea class="txta" id="msg-text" placeholder="Escribe tu dedicatoria en el libro de firmas..."></textarea>
+              <button class="btn-submit" id="btn-msg" onclick="sendMessage()">Grabar dedicatoria</button>
+              <div class="status-toast" id="msg-ok">Nota guardada correctamente</div>
+            </div>
+            <div>
+              <div class="wall-hdr"><span class="wall-title">Registros indexados</span></div>
+              <div class="msg-wall-stack" id="msg-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== ENTORNO DETALLE: REGALOS MODULARES CONECTADOS ===== -->
+        <div class="detailed-section" id="sec-regalo">
+          <button class="back-interface-btn" onclick="backToDashboard()">← Volver al panel</button>
+          <div class="split-grid" id="regalo-split-grid"></div>
+        </div>
+
+        <!-- ===== ENTORNO DETALLE: SPOTIFY ===== -->
+        <div class="detailed-section" id="sec-spotify">
+          <button class="back-interface-btn" onclick="backToDashboard()">← Volver al panel</button>
+          <div class="spotify-widget-embed">
+            <iframe src="https://open.spotify.com/embed/playlist/1KWaMoSrB3c5h4ET6pd48b?utm_source=generator&theme=0" width="100%" height="352" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div style="text-align:center;">
+              <a class="btn-spotify-link" href="https://open.spotify.com/playlist/1KWaMoSrB3c5h4ET6pd48b" target="_blank">
+                <span class="hover-scale-text">Abrir aplicación externa</span>
+              </a>
+            </div>
+          </div>
+          <div class="form-block" style="margin-top: 32px;">
+            <h4 style="font-size:0.75rem; text-transform:uppercase; margin-bottom:16px; letter-spacing:1px;">¿Cómo integrar música?</h4>
+            <div class="how-step-line"><div>01 //</div><div>Sigue la lista guardándola en tu biblioteca.</div></div>
+            <div class="how-step-line"><div>02 //</div><div>Busca la canción desde el motor nativo de Spotify.</div></div>
+            <div class="how-step-line"><div>03 //</div><div>Abre sus configuraciones extendidas "···" y elige "Añadir a esta lista".</div></div>
+          </div>
+        </div>
+
+        <!-- ===== ENTORNO DETALLE: STICKERS ===== -->
+        <div class="detailed-section" id="sec-stickers">
+          <button class="back-interface-btn" onclick="backToDashboard()">← Volver al panel</button>
+          <div class="wall-hdr"><span class="wall-title">Colección de Stickers Descargables (Edición DaVinci)</span></div>
+          <div class="stickers-gallery-grid">
+            <div class="sticker-download-card">
+              <div class="sticker-visual-box">🎨</div>
+              <div>
+                <h4 style="font-size: 0.9rem; margin-bottom: 4px;">Pack Completo WhatsApp</h4>
+                <p style="font-size: 0.7rem; color: #666; margin-bottom: 14px;">Efectos artísticos estilo DaVinci</p>
+              </div>
+              <button class="btn-download-sticker" onclick="alert('Pack en preparación. Próximamente disponible para instalación directa.')">Instalar Pack</button>
+            </div>
+            <div class="sticker-download-card">
+              <div class="sticker-visual-box">📸</div>
+              <div>
+                <h4 style="font-size: 0.9rem; margin-bottom: 4px;">David HD Cutout</h4>
+                <p style="font-size: 0.7rem; color: #666; margin-bottom: 14px;">Imagen transparente lista para editar</p>
+              </div>
+              <button class="btn-download-sticker" onclick="alert('Descarga de archivo PNG individual disponible pronto.')">Descargar PNG</button>
+            </div>
+            <div class="sticker-download-card">
+              <div class="sticker-visual-box">✨</div>
+              <div>
+                <h4 style="font-size: 0.9rem; margin-bottom: 4px;">David Portrait-Meme</h4>
+                <p style="font-size: 0.7rem; color: #666; margin-bottom: 14px;">Reacción rápida exclusiva para chats</p>
+              </div>
+              <button class="btn-download-sticker" onclick="alert('Descarga de recurso disponible pronto.')">Descargar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwZ0-3hv3vELXEFDhtt5Si7fjXQspNl3zuGrObJ2ZiM5x3z2A7LZmFF89SLWThKZuwG2Q/exec';
+    const PASSWORDS={familia:'david-familia30',amigos:'david-amigos30'};
+    let group=null,pendingGroup=null;
+    let pendingFiles=[];
+    
+    // OBJETO DINÁMICO
+    let giftData = { familia: [], amigos: [] };
+
+    function copyBizumNumber() {
+      navigator.clipboard.writeText('+34672047937');
+      alert('¡Número de Bizum copiado! (+34 672 047 937)');
+    }
+
+    const languages = ["30è aniversari","30 aniversario","30th anniversary","30周年","30ème anniversaire","30周年","ครบรอบ 30 ปี","30. geburtstag","30º compleanno","30º aniversário"];
+    let langIndex = 0;
+    function rotateLanguages() {
+      const el = document.getElementById('language-changer'); if(!el) return;
+      langIndex = (langIndex + 1) % languages.length;
+      el.style.opacity = '0';
+      setTimeout(() => { el.textContent = languages[langIndex]; el.style.opacity = '1'; }, 400);
+    }
+
+    function tick(){
+      const now=new Date(),yr=now.getFullYear();
+      let t=new Date(yr,5,19,0,0,0); if(t<=now)t=new Date(yr+1,5,19,0,0,0);
+      const d=t-now; const wrap = document.querySelector('.cd-wrap'); if(!wrap) return;
+      if(d<=0){wrap.innerHTML='<div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; font-weight:700;">// ARCHIVE IS LIVE</div>';return;}
+      const dd=Math.floor(d/86400000); const hh=Math.floor(d%86400000/3600000); const mm=Math.floor(d%3600000/60000); const ss=Math.floor(d%60000/1000);
+      
+      const dEl = document.getElementById('cd-d'); const hEl = document.getElementById('cd-h'); const mEl = document.getElementById('cd-m'); const sEl = document.getElementById('cd-s');
+      if(dEl) dEl.textContent=String(dd).padStart(2,'0'); if(hEl) hEl.textContent=String(hh).padStart(2,'0'); if(mEl) mEl.textContent=String(mm).padStart(2,'0'); if(sEl) sEl.textContent=String(ss).padStart(2,'0');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      tick(); setInterval(tick, 1000); setInterval(rotateLanguages, 2800);
+      setInterval(() => { if(group) { loadPhotos(); loadMessages(); loadGiftsServer(); } }, 5000);
+    });
+
+    function openModal(g){
+      pendingGroup=g;
+      const titleEl = document.getElementById('modal-title'); if(titleEl) titleEl.textContent=g==='familia'?'familia.':'amigos.';
+      const pwEl = document.getElementById('pw'); if(pwEl) pwEl.value='';
+      const errEl = document.getElementById('pw-err'); if(errEl) errEl.style.display='none';
+      const modalEl = document.getElementById('modal'); if(modalEl) modalEl.classList.add('active');
+      setTimeout(() => { if(pwEl) pwEl.focus(); }, 300);
+    }
+    function closeModal(){ const modalEl = document.getElementById('modal'); if(modalEl) modalEl.classList.remove('active'); }
+    document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') checkPw(); });
+    
+    function checkPw(){
+      const pwEl = document.getElementById('pw'); if(!pwEl) return;
+      const v = pwEl.value.trim();
+      if(v === PASSWORDS[pendingGroup]){ group = pendingGroup; closeModal(); enterApp(); }
+      else { const errEl = document.getElementById('pw-err'); if(errEl) errEl.style.display='block'; pwEl.value = ''; }
+    }
+    
+    function enterApp(){
+      const loginScreen = document.getElementById('s-login'); const appScreen = document.getElementById('s-app'); const badgeEl = document.getElementById('bar-badge');
+      if(loginScreen) loginScreen.classList.remove('active');
+      if(appScreen) appScreen.classList.add('active');
+      if(badgeEl) {
+        const festaDate = group === 'familia' ? '27 de Junio' : '4 de Julio';
+        badgeEl.textContent = `// ${group.toUpperCase()} — ${festaDate.toUpperCase()}`;
+      }
+      backToDashboard();
+    }
+    function logout(){ group = null; const loginScreen = document.getElementById('s-login'); const appScreen = document.getElementById('s-app'); if(appScreen) appScreen.classList.remove('active'); if(loginScreen) loginScreen.classList.add('active'); }
+
+    function navigateToSection(targetId) {
+      document.querySelectorAll('.detailed-section').forEach(s => s.classList.remove('active'));
+      const secEl = document.getElementById('sec-' + targetId); if(secEl) secEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if(targetId === 'regalo') { loadGiftsServer(); }
+    }
+    function backToDashboard() {
+      document.querySelectorAll('.detailed-section').forEach(s => s.classList.remove('active'));
+      const inicioEl = document.getElementById('sec-inicio'); if(inicioEl) inicioEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      loadPhotos(); loadMessages(); loadGiftsServer();
+    }
+
+    // ASYNC READ: LEER REGALOS DESDE EL EXCEL
+    async function loadGiftsServer() {
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getGifts&group=${group}`);
+        const data = await res.json();
+        if(data && data.gifts) {
+          giftData[group] = data.gifts;
+        }
+      } catch(e) { console.error("Error leyendo regalos del servidor:", e); }
+      
+      const currentActiveSec = document.querySelector('.detailed-section.active');
+      if(currentActiveSec && currentActiveSec.id === 'sec-regalo') {
+        renderRegaloForm();
+      } else {
+        renderGiftWidgetOnly();
+      }
+    }
+
+    // ACTUALIZADOR DEL WIDGET EN EL PANEL (SIN MOSTRAR DINERO EN AMIGOS)
+    function renderGiftWidgetOnly() {
+      const d = giftData[group] || [];
+      const wTotalEurEl = document.getElementById('widget-total-eur');
+      const wLbl = document.querySelector('#widget-total-eur + .stat-editorial-lbl');
+      if(!wTotalEurEl) return;
+
+      if (group === 'amigos') {
+        wTotalEurEl.textContent = d.length;
+        if(wLbl) wLbl.textContent = 'Confirmados';
+      } else {
+        const totalBali = d.filter(g => g.giftId === 'bali').length;
+        wTotalEurEl.textContent = totalBali;
+        if(wLbl) wLbl.textContent = 'Apuntados Bali';
+      }
+    }
+
+    // MAQUETACIÓN MODULAR DE REGALOS CON RESERVA ASÍNCRONA REAL
+    function renderRegaloForm() {
+      const grid = document.getElementById('regalo-split-grid');
+      if (!grid) return;
+
+      const d = giftData[group] || [];
+
+      if (group === 'amigos') {
+        // CORRECCIÓN: Eliminada la caja "Total Fondos" con los euros
+        grid.innerHTML = `
+          <div>
+            <div class="bizum-editorial-box">
+              <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666;">Aportación Directa Amigos</span>
+              <div class="bizum-number" style="font-size: 1.6rem; line-height: 1.3; font-weight: 700; margin: 16px 0;">Santiago<br><span style="color: var(--accent-gold); font-size: 1.3rem;">+34 672 047 937</span></div>
+              <div style="text-align: left; max-width: 280px; margin: 24px auto; font-size: 0.8rem; color: #888; border-top: 1px solid var(--border); padding-top: 18px; line-height: 1.6;">
+                <p style="margin-bottom: 6px;"><strong style="color: #fff;">Destinatario:</strong> Santiago</p>
+                <p style="margin-bottom: 6px;"><strong style="color: #fff;">Importe Fijo:</strong> 15€ por persona</p>
+                <p style="margin-bottom: 6px;"><strong style="color: #fff;">Concepto obligatorio:</strong> "Regalo David 30" + Tu Nombre</p>
+              </div>
+              <button class="btn-biz-link" onclick="copyBizumNumber()">Copiar Número</button>
+            </div>
+            <div class="stats-editorial-row" style="grid-template-columns: 1fr;">
+              <div class="stat-editorial-box"><span class="stat-editorial-val" id="total-ppl">0</span><span class="stat-editorial-lbl">Confirmados</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="form-block">
+              <span style="font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom:14px; color: var(--text-muted);">Anotarse en la lista (15€)</span>
+              <input class="inp" id="gift-name" placeholder="Tu nombre">
+              <button class="btn-submit" id="btn-gift-submit" onclick="joinGift()">Validar adición</button>
+              <div class="status-toast" id="gift-ok">Indexado en la lista</div>
+            </div>
+            <div id="gift-list"></div>
+          </div>
+        `;
+      } else if (group === 'familia') {
+        const rAirpods = d.find(g => g.giftId === 'airpods');
+        const rThule = d.find(g => g.giftId === 'thule');
+        const rSportiva = d.find(g => g.giftId === 'sportiva');
+        const rBali = d.filter(g => g.giftId === 'bali');
+
+        grid.innerHTML = `
+          <div>
+            <div class="form-block" style="background: #050505; margin-bottom: 20px;">
+              <span style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666; display:block; margin-bottom:20px;">Lista de Deseos Familia</span>
+              
+              <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="border-bottom: 1px solid #141414; padding-bottom: 14px;">
+                  <p style="font-size: 1.15rem; font-weight: 700; color: #fff;">01 // Dinero para el viaje a Bali</p>
+                  <p style="font-size: 0.72rem; color: var(--accent-gold); text-transform: uppercase; margin-top: 6px;">○ Disponible siempre (${rBali.length} personas apuntadas)</p>
+                </div>
+
+                <div style="border-bottom: 1px solid #141414; padding-bottom: 14px; opacity: ${rAirpods ? 0.3 : 1};">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #fff;">02 // AirPods Max 2</p>
+                    <a href="https://www.apple.com/es/airpods-max/" target="_blank" style="font-size: 0.65rem; color: #666; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">Enlace Oficial ↗</a>
+                  </div>
+                  <p style="font-size: 0.72rem; color: ${rAirpods ? '#ff4d6d' : '#666'}; text-transform: uppercase; margin-top: 6px;">
+                    ${rAirpods ? `🔒 Reservado por ${rAirpods.name}` : '○ Disponible'}
+                  </p>
+                </div>
+
+                <div style="border-bottom: 1px solid #141414; padding-bottom: 14px; opacity: ${rThule ? 0.3 : 1};">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <p style="font-size: 1.15rem; font-weight: 700; color: #fff;">03 // Funda Thule Macbook 16</p>
+                    <a href="https://www.thule.com/es-es/laptop-bags-sleeves/laptop-sleeves-and-cases/thule-gauntlet-macbook-pro-sleeve-16-_-3205413" target="_blank" style="font-size: 0.65rem; color: #666; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">Enlace Oficial ↗</a>
+                  </div>
+                  <p style="font-size: 0.72rem; color: ${rThule ? '#ff4d6d' : '#666'}; text-transform: uppercase; margin-top: 6px;">
+                    ${rThule ? `🔒 Reservado por ${rThule.name}` : '○ Disponible'}
+                  </p>
+                </div>
+
+                <div style="opacity: ${rSportiva ? 0.3 : 1};">
+                  <p style="font-size: 1.15rem; font-weight: 700; color: #fff;">04 // Zapatillas La Sportiva</p>
+                  <p style="font-size: 0.72rem; color: ${rSportiva ? '#ff4d6d' : '#666'}; text-transform: uppercase; margin-top: 6px;">
+                    ${rSportiva ? `🔒 Reservado por ${rSportiva.name}` : '○ Disponible'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stats-editorial-row">
+              <div class="stat-editorial-box"><span class="stat-editorial-val" id="total-eur">0</span><span class="stat-editorial-lbl">Apuntados Bali</span></div>
+              <div class="stat-editorial-box"><span class="stat-editorial-val" id="total-ppl">0</span><span class="stat-editorial-lbl">Total Reservas</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-block">
+              <span style="font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom:20px; color: var(--text-muted);">Adjudicarse / Reservar regalo</span>
+              <input class="inp" id="gift-name" placeholder="Tu nombre">
+              
+              <div style="margin-bottom: 24px; text-align: left; display: flex; flex-direction: column; gap: 14px;">
+                <label style="display: flex; align-items: center; font-size: 0.88rem; cursor: pointer; color: #fff;">
+                  <input type="radio" name="fam-gift-choice" value="bali" checked>
+                  Dinero para el viaje a Bali
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.88rem; cursor: pointer; color: #fff; ${rAirpods ? 'opacity: 0.25; pointer-events: none;' : ''}">
+                  <input type="radio" name="fam-gift-choice" value="airpods" ${rAirpods ? 'disabled' : ''}>
+                  AirPods Max 2
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.88rem; cursor: pointer; color: #fff; ${rThule ? 'opacity: 0.25; pointer-events: none;' : ''}">
+                  <input type="radio" name="fam-gift-choice" value="thule" ${rThule ? 'disabled' : ''}>
+                  Funda Thule
+                </label>
+                <label style="display: flex; align-items: center; font-size: 0.88rem; cursor: pointer; color: #fff; ${rSportiva ? 'opacity: 0.25; pointer-events: none;' : ''}">
+                  <input type="radio" name="fam-gift-choice" value="sportiva" ${rSportiva ? 'disabled' : ''}>
+                  Zapatillas La Sportiva
+                </label>
+              </div>
+
+              <button class="btn-submit" id="btn-gift-submit" onclick="joinGift()">Confirmar Reserva</button>
+              <div class="status-toast" id="gift-ok">Reserva guardada en el catálogo</div>
+            </div>
+            <div id="gift-list"></div>
+          </div>
+        `;
+      }
+      renderGift();
+    }
+
+    // ASYNC WRITE: GUARDAR SELECCIÓN EN EL SERVIDOR DE GOOGLE SHEETS
+    async function joinGift(){
+      const nameEl = document.getElementById('gift-name'); if(!nameEl) return;
+      const name = nameEl.value.trim();
+      if(!name){ alert('Por favor indica tu nombre completo'); return; }
+      
+      let giftId = 'cuota';
+      let amt = 0;
+
+      if (group === 'amigos') {
+        giftId = 'cuota';
+        amt = 15;
+      } else {
+        const radio = document.querySelector('input[name="fam-gift-choice"]:checked');
+        if (!radio) { alert('Selecciona un artículo para reservar'); return; }
+        giftId = radio.value;
+        amt = 0;
+      }
+
+      const btn = document.getElementById('btn-gift-submit'); if(btn) btn.disabled = true;
+      let serverResponseData = null;
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'addGift', group, name, giftId, amt })
+        });
+        serverResponseData = await response.json();
+        if(serverResponseData && serverResponseData.success) {
+          const okToast = document.getElementById('gift-ok'); if(okToast) okToast.style.display = 'block';
+          setTimeout(() => { if(okToast) okToast.style.display = 'none'; }, 3000);
+          nameEl.value = '';
+          loadGiftsServer(); 
+        } else {
+          alert('Error de guardado en el servidor: ' + JSON.stringify(serverResponseData));
+        }
+      } catch(e) { alert('Fallo crítico de red en el módulo de regalos.'); }
+      if(btn) btn.disabled = false;
+    }
+
+    function renderGift(){
+      const d = giftData[group] || [];
+      const totalEurEl = document.getElementById('total-eur'); 
+      const wTotalEurEl = document.getElementById('widget-total-eur'); 
+      const wLbl = document.querySelector('#widget-total-eur + .stat-editorial-lbl');
+      const totalPplEl = document.getElementById('total-ppl'); 
+      const listEl = document.getElementById('gift-list');
+      
+      if (group === 'amigos') {
+        if(totalPplEl) totalPplEl.textContent = d.length;
+        if(wTotalEurEl) wTotalEurEl.textContent = d.length;
+        if(wLbl) wLbl.textContent = 'Confirmados';
+        if(!listEl) return; if(!d.length){ listEl.innerHTML = ''; return; }
+        listEl.innerHTML = '<div class="form-block" style="margin-top:24px;"><div style="font-size:0.65rem; color:#666; letter-spacing:1.5px; margin-bottom:12px; text-transform:uppercase; font-weight:700;">Participantes Validados</div>' +
+          d.map(g => `<div class="gift-row-item"><span>${g.name}</span><span style="font-weight:700; color:#fff;">15€</span></div>`).join('') + '</div>';
+      } else {
+        const totalBali = d.filter(g => g.giftId === 'bali').length;
+        if(totalEurEl) totalEurEl.textContent = totalBali;
+        if(wTotalEurEl) wTotalEurEl.textContent = totalBali;
+        if(wLbl) wLbl.textContent = 'Apuntados Bali';
+        if(totalPplEl) totalPplEl.textContent = d.length;
+        if(!listEl) return; if(!d.length){ listEl.innerHTML = ''; return; }
+        
+        const namesMap = {
+          bali: 'Aportación Viaje Bali 🌴',
+          airpods: 'AirPods Max 2 🎧',
+          thule: 'Funda Thule 💼',
+          sportiva: 'Zapatillas La Sportiva 👟'
+        };
+
+        listEl.innerHTML = '<div class="form-block" style="margin-top:24px;"><div style="font-size:0.65rem; color:#666; letter-spacing:1.5px; margin-bottom:12px; text-transform:uppercase; font-weight:700;">Registro de Reservas Confirmadas</div>' +
+          d.map(g => {
+            const label = namesMap[g.giftId] || 'Artículo';
+            const value = g.giftId === 'bali' ? `✓ Apuntado` : '🔒 Adjudicado';
+            return `<div class="gift-row-item"><span>${g.name}</span><span style="font-weight:700; color:#fff;">${label} (${value})</span></div>`;
+          }).join('') + '</div>';
+      }
+    }
+
+    function openLightbox(src,author){
+      const imgEl = document.getElementById('lb-img'); const infoEl = document.getElementById('lb-info'); const lightboxEl = document.getElementById('lightbox');
+      if(imgEl) imgEl.src=src; if(infoEl) infoEl.textContent='ITEM ARCHIVE BY // ' + author.toUpperCase(); if(lightboxEl) lightboxEl.classList.add('active');
+    }
+    function closeLightbox(){ const lightboxEl = document.getElementById('lightbox'); if(lightboxEl) lightboxEl.classList.remove('active'); }
+
+    function previewFiles(e){
+      pendingFiles = Array.from(e.target.files);
+      const prev = document.getElementById('file-preview'); if(!prev) return; prev.innerHTML = '';
+      pendingFiles.slice(0,6).forEach(f => {
+        const img = document.createElement('img'); img.className = 'file-preview-thumb';
+        const r = new FileReader(); r.onload = ev => img.src = ev.target.result; r.readAsDataURL(f); prev.appendChild(img);
+      });
+    }
+
+    // SUBIDA FOTOS
+    async function uploadPhotos(){
+      const authorEl = document.getElementById('ph-author'); if(!authorEl) return;
+      const author = authorEl.value.trim();
+      if(!author){ alert('Por favor especifica tu firma para archivar'); return; }
+      if(!pendingFiles.length){ alert('Selecciona al menos un archivo válido'); return; }
+      const btn = document.getElementById('btn-upload'); if(btn) btn.disabled = true;
+      const pw = document.getElementById('progress-wrap'); const pf = document.getElementById('progress-fill'); const pl = document.getElementById('progress-label');
+      if(pw) pw.style.display = 'block';
+      let done = 0; let serverResponseData = null; let successCheck = false;
+      for(const file of pendingFiles){
+        if(pl) pl.textContent = `PROCESANDO ${done+1} / ${pendingFiles.length}`;
+        if(pf) pf.style.width = `${(done/pendingFiles.length)*100}%`;
+        const b64 = await toBase64(file);
+        try {
+          const response = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'uploadPhoto', group, author, caption: '', base64: b64, mimeType: file.type, filename: file.name }) });
+          serverResponseData = await response.json(); if(serverResponseData && serverResponseData.success) { successCheck = true; }
+        } catch(e) { console.error(e); serverResponseData = { error: e.message }; }
+        done++;
+      }
+      if(pw) pw.style.display = 'none'; if(btn) btn.disabled = false;
+      if(!successCheck) { alert('⚠️ Google Sheets rechazó el guardado.\n\nRespuesta de depuración del servidor:\n' + JSON.stringify(serverResponseData)); }
+      else {
+        const okToast = document.getElementById('ph-ok'); if(okToast) okToast.style.display = 'block';
+        setTimeout(() => { if(okToast) okToast.style.display = 'none'; }, 3000);
+        const prevEl = document.getElementById('file-preview'); const fileInEl = document.getElementById('file-in');
+        if(prevEl) prevEl.innerHTML = ''; if(fileInEl) fileInEl.value = '';
+        pendingFiles = []; loadPhotos();
+      }
+    }
+
+    function toBase64(file){ return new Promise((res,rej) => { const r = new FileReader(); r.onload = e => res(e.target.result.split(',')[1]); r.onerror = rej; r.readAsDataURL(file); }); }
+
+    // RENDERS FOTOS
+    async function loadPhotos(){
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getPhotos&group=${group}`);
+        const data = await res.json();
+        const wall = document.getElementById('photo-wall'); const widgetPreview = document.getElementById('widget-preview-photos-area'); const widgetCounter = document.getElementById('widget-photo-counter');
+        if(!wall || !widgetPreview || !widgetCounter) return;
+        if(!data.photos || !data.photos.length){
+          wall.innerHTML = '<div class="empty-state">// Catálogo de capturas vacío.</div>';
+          widgetPreview.innerHTML = '<span style="font-size:0.75rem; color:#666;">Sin capturas recientes</span>';
+          widgetCounter.textContent = '0 imágenes — ver galería →'; return;
+        }
+        widgetCounter.textContent = data.photos.length + (data.photos.length === 1 ? ' imagen — ver galería →' : ' imágenes — ver galería →');
+        wall.innerHTML = data.photos.map(p => `
+          <div class="photo-item-frame" onclick="openLightbox('${p.thumb}','${p.author}')">
+            <img src="${p.thumb}" loading="lazy" alt="Item">
+            <div class="photo-item-author">${p.author}</div>
+          </div>`).join('');
+        widgetPreview.innerHTML = data.photos.slice(0, 4).map(p => `
+          <img src="${p.thumb}" class="widget-preview-thumb" onclick="event.stopPropagation(); openLightbox('${p.thumb}','${p.author}');" alt="Thumb">
+        `).join('');
+      } catch(e) { console.error(e); }
+    }
+
+    // RENDERS DEDICATORIAS
+    async function sendMessage(){
+      const authorEl = document.getElementById('msg-author'); const textEl = document.getElementById('msg-text'); if(!authorEl || !textEl) return;
+      const author = authorEl.value.trim(); const text = textEl.value.trim();
+      if(!author || !text){ alert('Escribe tu firma y mensaje'); return; }
+      const btn = document.getElementById('btn-msg'); if(btn) btn.disabled = true; let serverResponseData = null;
+      try {
+        const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'addMessage', group, author, text }) });
+        serverResponseData = await res.json();
+        if(serverResponseData && serverResponseData.success){
+          const okToast = document.getElementById('msg-ok'); if(okToast) okToast.style.display = 'block';
+          setTimeout(() => { if(okToast) okToast.style.display = 'none'; }, 3000);
+          authorEl.value = ''; textEl.value = ''; loadMessages();
+        } else { alert('⚠️ Google Sheets rechazó el comentario.\n\nRespuesta detallada de Google:\n' + JSON.stringify(serverResponseData)); }
+      } catch(e) { alert('⚠️ Error crítico de red en el canal de firmas.'); }
+      if(btn) btn.disabled = false;
+    }
+    
+    async function loadMessages(){
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getMessages&group=${group}`);
+        const data = await res.json();
+        const list = document.getElementById('msg-list'); const widgetPreview = document.getElementById('widget-preview-messages-area');
+        if(!list || !widgetPreview) return;
+        if(!data.messages || !data.messages.length){
+          list.innerHTML = '<div class="empty-state">// Libro de firmas vacío.</div>';
+          widgetPreview.innerHTML = '<span style="font-size:0.75rem; color:#666;">Sin mensajes registrados</span>'; return;
+        }
+        list.innerHTML = data.messages.map(m => `
+          <div class="msg-editorial-card">
+            <div class="msg-card-meta"><span>${m.author}</span><span>${m.date}</span></div>
+            <div class="msg-card-body">“${m.text}”</div>
+          </div>`).join('');
+        widgetPreview.innerHTML = data.messages.slice(0, 2).map(m => `
+          <div class="widget-mini-msg"><strong>${m.author}</strong>“${m.text.substring(0, 50)}${m.text.length > 50 ? '...' : ''}”</div>
+        `).join('');
+      } catch(e) { console.error(e); }
+    }
+  </script>
+</body>
+</html>
